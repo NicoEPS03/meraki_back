@@ -23,10 +23,10 @@ public class Club implements Serializable {
     @ApiModelProperty(dataType = "String", value = "Description of club", example = "Un club que pertenece...")
     private String description;
     @ManyToOne
-    @JoinColumn(name = "CB_IDSPORT", foreignKey = @ForeignKey(name = "FK_IDSPORT"))
+    @JoinColumn(name = "CB_IDSPORT", foreignKey = @ForeignKey(name = "FK_CLUB_IDSPORT"))
     private Sport sport;
     @ManyToOne
-    @JoinColumn(name = "CB_IDCITY", foreignKey = @ForeignKey(name = "FK_IDCITY"))
+    @JoinColumn(name = "CB_IDCITY", foreignKey = @ForeignKey(name = "FK_CLUB_IDCITY"))
     private City city;
     @Size(min = 20, max = 50, message = "The instagram link must be between 20 and 50 characters")
     @Column(name = "CB_INSTAGRAM_LINK", length = 50)
@@ -52,7 +52,7 @@ public class Club implements Serializable {
     @Column(name = "CB_WHATSAPP_LINK", length = 50)
     @ApiModelProperty(dataType = "String", value = "Whatsapp link of club", example = "www.whatsapp.com")
     private String whatsappLink;
-    @Column(name = "CB_STATE",columnDefinition = "boolean default false")
+    @Column(name = "CB_STATE", columnDefinition = "boolean default false")
     private Boolean state;
 
     public Club() {
