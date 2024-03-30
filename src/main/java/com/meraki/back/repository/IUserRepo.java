@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 public interface IUserRepo extends JpaRepository<User,Integer> {
     public User findByDocument(String document);
 
-    public int searchDocument(String document);
+    public int searchDocument(int id, String document);
 }

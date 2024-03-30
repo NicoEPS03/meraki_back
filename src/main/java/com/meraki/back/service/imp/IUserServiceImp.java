@@ -8,6 +8,7 @@ import com.meraki.back.repository.IUserRepo;
 import com.meraki.back.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
@@ -21,7 +22,8 @@ public class IUserServiceImp implements IUserService {
     }
     @Override
     public Page<User> retornarPaginado(int page, int size) {
-        return null;
+        Page<User> result = repoUser.findAll(PageRequest.of(page,size));
+        return result;
     }
 
     @Override
@@ -38,6 +40,7 @@ public class IUserServiceImp implements IUserService {
         if (repoUser.findByDocument(user.getDocument()) != null) {
             throw new IntegridadException("Document all ready exist");
         }
+        user.setState(true);
         this.repoUser.save(user);
     }
 
@@ -45,7 +48,7 @@ public class IUserServiceImp implements IUserService {
     public void editar(User user) throws ArgumentRequiredException, ModelNotFoundException, IntegridadException {
         if(user.getId() != null) {
             if(validarExistenciaPorId(user.getId())) {
-                if(repoUser.searchDocument(user.getDocument()) == 1) {
+                if(repoUser.searchDocument(user.getId(), user.getDocument()) != 1) {
                     this.repoUser.save(user);
                 }else {
                     throw new IntegridadException("Document all ready exist");

@@ -12,7 +12,7 @@ import java.io.Serializable;
 @Table(name = "user")
 @ApiModel("Model user")
 @NamedQueries({
-        @NamedQuery(name = "User.searchDocument", query = "SELECT COUNT(m) FROM User m WHERE m.document = :document"),
+        @NamedQuery(name = "User.searchDocument", query = "SELECT COUNT(m) FROM User m WHERE NOT m.id = :id AND m.document = :document"),
 })
 public class User implements Serializable {
     @Id
@@ -33,7 +33,7 @@ public class User implements Serializable {
     @ApiModelProperty(required = true, dataType = "String", value = "Description of minimum 8 and maximum 30 characters", example = "contraseña", allowableValues = "range[8,30]")
     @Column(name = "USR_PASSWORD", length = 30, nullable = false)
     private String password;
-    @Column(name = "USR_STATE", columnDefinition = "boolean default false")
+    @Column(name = "USR_STATE", columnDefinition = "boolean default 1")
     private Boolean state;
 
     public User() {
