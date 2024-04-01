@@ -26,29 +26,36 @@ import java.util.List;
 public class ExceptionHandlerPer extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(ModelNotFoundException.class)
-    public final ResponseEntity<ExceptionWrapper> handlerModelNotFoundException(ModelNotFoundException e, WebRequest request){
-        ExceptionWrapper ew = new ExceptionWrapper(HttpStatus.NOT_FOUND,  HttpStatus.NOT_FOUND.toString(), e.getMessage(),  request.getDescription(false));
+    public final ResponseEntity<ExceptionWrapper> handlerModelNotFoundException(ModelNotFoundException e, WebRequest request) {
+        ExceptionWrapper ew = new ExceptionWrapper(HttpStatus.NOT_FOUND, HttpStatus.NOT_FOUND.toString(), e.getMessage(), request.getDescription(false));
         return new ResponseEntity<ExceptionWrapper>(ew, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(ArithmeticException.class)
-    public final ResponseEntity<ExceptionWrapper> handlerModelArithmeticException(ArithmeticException e, WebRequest request){
+    public final ResponseEntity<ExceptionWrapper> handlerModelArithmeticException(ArithmeticException e, WebRequest request) {
         e.printStackTrace();
         ExceptionWrapper ew = new ExceptionWrapper(HttpStatus.INTERNAL_SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR.toString(), e.getMessage(), request.getDescription(false));
         return new ResponseEntity<ExceptionWrapper>(ew, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @ExceptionHandler (IntegridadException.class)
-    public final ResponseEntity<ExceptionWrapper> handlerIntegridadException(IntegridadException e, WebRequest request){
-        ExceptionWrapper ew = new ExceptionWrapper(HttpStatus.CONFLICT,  HttpStatus.CONFLICT.toString(), e.getMessage(),  request.getDescription(false));
+    @ExceptionHandler(IntegridadException.class)
+    public final ResponseEntity<ExceptionWrapper> handlerIntegridadException(IntegridadException e, WebRequest request) {
+        ExceptionWrapper ew = new ExceptionWrapper(HttpStatus.CONFLICT, HttpStatus.CONFLICT.toString(), e.getMessage(), request.getDescription(false));
         return new ResponseEntity<ExceptionWrapper>(ew, HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(Exception.class)
-    public final ResponseEntity<ExceptionWrapper> handlerModelException(Exception e, WebRequest request){
+    public final ResponseEntity<ExceptionWrapper> handlerModelException(Exception e, WebRequest request) {
         e.printStackTrace();
         ExceptionWrapper ew = new ExceptionWrapper(HttpStatus.INTERNAL_SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR.toString(), "Ha ocurrido un error", request.getDescription(false));
         return new ResponseEntity<ExceptionWrapper>(ew, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(ArgumentRequiredException.class)
+    public final ResponseEntity<ExceptionWrapper> handlerArgumentRequiredException(Exception e, WebRequest request) {
+        e.printStackTrace();
+        ExceptionWrapper ew = new ExceptionWrapper(HttpStatus.BAD_REQUEST, HttpStatus.BAD_REQUEST.toString(), e.getMessage(), request.getDescription(false));
+        return new ResponseEntity<ExceptionWrapper>(ew, HttpStatus.BAD_REQUEST);
     }
 
     @Override
@@ -83,7 +90,7 @@ public class ExceptionHandlerPer extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
         ex.printStackTrace();
         List<String> details = new ArrayList<>();
-        for(ObjectError error : ex.getBindingResult().getAllErrors()) {
+        for (ObjectError error : ex.getBindingResult().getAllErrors()) {
             details.add(error.getDefaultMessage());
         }
         ExceptionWrapper ew = new ExceptionWrapper(HttpStatus.BAD_REQUEST, HttpStatus.BAD_REQUEST.toString(), details.toString(), request.getDescription(false));

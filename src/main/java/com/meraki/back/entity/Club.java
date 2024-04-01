@@ -17,6 +17,12 @@ public class Club implements Serializable {
     @ApiModelProperty(dataType = "Integer", value = "Id of club", example = "1")
     @Column(name = "CB_ID")
     private Integer id;
+
+    @NotNull(message = "Name is obligatory")
+    @Size(min = 5, max = 30, message = "The name must be between 5 and 30 characters")
+    @Column(name = "CB_NAME", length = 300, nullable = false)
+    @ApiModelProperty(dataType = "String", value = "Name of club", example = "Balones del...")
+    private String name;
     @NotNull(message = "Description is obligatory")
     @Size(min = 30, max = 300, message = "The description must be between 30 and 300 characters")
     @Column(name = "CB_DESCRIPTION", length = 300, nullable = false)
@@ -64,6 +70,14 @@ public class Club implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDescription() {

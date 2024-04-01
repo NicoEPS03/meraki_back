@@ -22,7 +22,7 @@ public class UserController {
     @Autowired
     private IUserService service;
 
-    @GetMapping(value = "/getPage/{page}/{size}" ,produces = "application/json")
+    @GetMapping(value = "/getPage/{page}/{size}", produces = "application/json")
     @ApiOperation(value = "Get all users", notes = "Return all users")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK. The response is obtained successfully", response = User.class)})
@@ -34,40 +34,42 @@ public class UserController {
     @GetMapping(value = "get/{id}", produces = "application/json")
     @ApiOperation(value = "Get user", notes = "Retorn user by ID")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OK. The response is obtained successfully", response = User.class ),
-            @ApiResponse(code = 404, message = "Not Found. Didn't found the user") })
-    public ResponseEntity<?> retornarUser(@PathVariable("id") int id ) throws ModelNotFoundException, Exception {
+            @ApiResponse(code = 200, message = "OK. The response is obtained successfully", response = User.class),
+            @ApiResponse(code = 404, message = "Not Found. Didn't found the user")})
+    public ResponseEntity<?> retornarUser(@PathVariable("id") int id) throws ModelNotFoundException, Exception {
         User user = service.retonarPorId(id);
 
         return new ResponseEntity<Object>(user, HttpStatus.OK);
     }
+
     @PostMapping(value = "/insert", consumes = "application/json")
     @ApiOperation(value = "Insert user", notes = "Create a new user")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Created. The user created correctly", response = User.class ),
-            @ApiResponse(code = 409, message = "Conflict. The document already created") })
-    public ResponseEntity<?> guardar (@Valid @RequestBody User user) throws IntegridadException, Exception {
+            @ApiResponse(code = 201, message = "Created. The user created correctly", response = User.class),
+            @ApiResponse(code = 409, message = "Conflict. The document already created")})
+    public ResponseEntity<?> guardar(@Valid @RequestBody User user) throws IntegridadException, Exception {
         service.guardar(user);
 
         return new ResponseEntity<Object>(user, HttpStatus.CREATED);
     }
+
     @PutMapping(value = "/edit", consumes = "application/json")
     @ApiOperation(value = "Edit user", notes = "Edit a user")
     @ApiResponses(value = {
             @ApiResponse(code = 204, message = "Ok. The user edited correctly"),
             @ApiResponse(code = 404, message = "Not Found. Didn't found the user"),
             @ApiResponse(code = 409, message = "Conflict. The document already created")})
-    public ResponseEntity<?> editar (@Valid @RequestBody User user) throws ModelNotFoundException, IntegridadException, Exception {
+    public ResponseEntity<?> editar(@Valid @RequestBody User user) throws ModelNotFoundException, IntegridadException, Exception {
         service.editar(user);
 
         return new ResponseEntity<Object>(user, HttpStatus.OK);
     }
 
-    @DeleteMapping (value = "/delete/{id}")
+    @DeleteMapping(value = "/delete/{id}")
     @ApiOperation(value = "Delete user", notes = "Delete user by ID")
     @ApiResponses(value = {
             @ApiResponse(code = 204, message = "No Content. The user deleted correctly"),
-            @ApiResponse(code = 404, message = "Not Found. Didn't found the user") })
+            @ApiResponse(code = 404, message = "Not Found. Didn't found the user")})
     public ResponseEntity<?> eliminar(@PathVariable int id) throws ModelNotFoundException, IntegridadException, Exception {
         service.eliminar(id);
 

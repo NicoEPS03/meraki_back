@@ -17,18 +17,20 @@ import java.util.Objects;
 public class IUserServiceImp implements IUserService {
     @Autowired
     private IUserRepo repoUser;
+
     private Boolean validarExistenciaPorId(int id) {
         return repoUser.existsById(id);
     }
+
     @Override
     public Page<User> retornarPaginado(int page, int size) {
-        Page<User> result = repoUser.findAll(PageRequest.of(page,size));
+        Page<User> result = repoUser.findAll(PageRequest.of(page, size));
         return result;
     }
 
     @Override
     public User retonarPorId(Integer id) throws ModelNotFoundException {
-        if(this.repoUser.existsById(id)) {
+        if (this.repoUser.existsById(id)) {
             User user = (User) this.repoUser.findById(id).get();
             return user;
         } else
@@ -46,11 +48,12 @@ public class IUserServiceImp implements IUserService {
 
     @Override
     public void editar(User user) throws ArgumentRequiredException, ModelNotFoundException, IntegridadException {
-        if(user.getId() != null) {
-            if(validarExistenciaPorId(user.getId())) {
-                if(repoUser.searchDocument(user.getId(), user.getDocument()) != 1) {
+        if (user.getId() != null) {
+            if (validarExistenciaPorId(user.getId())) {
+                if (repoUser.searchDocument(user.getId(), user.getDocument()) != 1) {
+                    user.setState(true);
                     this.repoUser.save(user);
-                }else {
+                } else {
                     throw new IntegridadException("Document all ready exist");
                 }
             } else
@@ -62,11 +65,11 @@ public class IUserServiceImp implements IUserService {
 
     @Override
     public void eliminar(int id) throws ModelNotFoundException, ArgumentRequiredException {
-        if(validarExistenciaPorId(id)) {
+        if (validarExistenciaPorId(id)) {
             User user = this.repoUser.findById(id).get();
             user.setState(false);
             this.repoUser.save(user);
-        }else
-            throw new ModelNotFoundException("Usuario no encontrado");
+        } else
+            throw new ModelNotFoundException("User not found");
     }
 }
