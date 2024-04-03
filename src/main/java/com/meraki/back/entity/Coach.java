@@ -17,7 +17,7 @@ public class Coach implements Serializable {
     @ApiModelProperty(dataType = "Integer", value = "Id of coach", example = "1")
     @Column(name = "CH_ID")
     private Integer id;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "CH_IDUSER", foreignKey = @ForeignKey(name = "FK_COACH_IDUSER"))
     private User user;
     @ManyToOne
