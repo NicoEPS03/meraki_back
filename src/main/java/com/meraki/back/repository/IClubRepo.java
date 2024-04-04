@@ -1,6 +1,5 @@
 package com.meraki.back.repository;
 
-import com.meraki.back.dto.ClubFilterDto;
 import com.meraki.back.entity.Club;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

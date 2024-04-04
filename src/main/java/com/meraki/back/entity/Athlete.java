@@ -13,6 +13,9 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "athlete")
 @ApiModel("Model athlete")
+@NamedQueries({
+        @NamedQuery(name = "Athlete.searchDocument", query = "SELECT COUNT(a) FROM Athlete a WHERE NOT a.id = :id AND a.document = :document"),
+})
 public class Athlete implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

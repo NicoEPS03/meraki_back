@@ -4,7 +4,6 @@ import com.meraki.back.dto.CoachDto;
 import com.meraki.back.entity.Club;
 import com.meraki.back.entity.Coach;
 import com.meraki.back.entity.Rol;
-import com.meraki.back.entity.User;
 import com.meraki.back.exception.ArgumentRequiredException;
 import com.meraki.back.exception.IntegridadException;
 import com.meraki.back.exception.ModelNotFoundException;
