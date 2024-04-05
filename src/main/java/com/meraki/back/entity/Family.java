@@ -12,6 +12,9 @@ import java.io.Serializable;
 @Entity
 @Table(name = "family")
 @ApiModel("Model family")
+@NamedQueries({
+        @NamedQuery(name = "Family.searchDocument", query = "SELECT COUNT(f) FROM Family f WHERE NOT f.id = :id AND f.document = :document"),
+})
 public class Family implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,7 +22,7 @@ public class Family implements Serializable {
     @Column(name = "FA_ID")
     private Integer id;
     @ManyToOne
-    @JoinColumn(name = "AT_IDATHLETE", foreignKey = @ForeignKey(name = "FK_FAMILY_IDATHLETE"))
+    @JoinColumn(name = "FA_IDATHLETE", foreignKey = @ForeignKey(name = "FK_FAMILY_IDATHLETE"))
     private Athlete athlete;
     @NotNull(message = "Names are obligatory")
     @Size(min = 5, max = 70, message = "The names must be between 5 and 70 characters")
@@ -59,7 +62,7 @@ public class Family implements Serializable {
     @ApiModelProperty(required = true, dataType = "String", value = "Relationship of minimum 5 and maximum 15 characters", example = "Padre", allowableValues = "range[5,15]")
     @Column(name = "FA_RELATIONSHIP", length = 15, nullable = false)
     private String relationship;
-    @Column(name = "FA_STATE", columnDefinition = "boolean default false")
+    @Column(name = "FA_STATE", columnDefinition = "boolean default true")
     private Boolean state;
 
     public Family() {
