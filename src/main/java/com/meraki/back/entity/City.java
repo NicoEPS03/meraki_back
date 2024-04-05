@@ -3,12 +3,14 @@ package com.meraki.back.entity;
 import io.swagger.annotations.ApiModel;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "city")
 @ApiModel("Model city")
 public class City {
+    @Id
     @Column(name = "CT_ID", length = 15, nullable = false, unique = true)
     private Integer id;
     @Column(name = "CT_IDDEP", length = 11, nullable = false)

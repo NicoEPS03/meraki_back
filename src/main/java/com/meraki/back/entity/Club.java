@@ -17,16 +17,22 @@ public class Club implements Serializable {
     @ApiModelProperty(dataType = "Integer", value = "Id of club", example = "1")
     @Column(name = "CB_ID")
     private Integer id;
+
+    @NotNull(message = "Name is obligatory")
+    @Size(min = 5, max = 30, message = "The name must be between 5 and 30 characters")
+    @Column(name = "CB_NAME", length = 300, nullable = false)
+    @ApiModelProperty(dataType = "String", value = "Name of club", example = "Balones del...")
+    private String name;
     @NotNull(message = "Description is obligatory")
     @Size(min = 30, max = 300, message = "The description must be between 30 and 300 characters")
     @Column(name = "CB_DESCRIPTION", length = 300, nullable = false)
     @ApiModelProperty(dataType = "String", value = "Description of club", example = "Un club que pertenece...")
     private String description;
     @ManyToOne
-    @JoinColumn(name = "CB_IDSPORT", foreignKey = @ForeignKey(name = "FK_IDSPORT"))
+    @JoinColumn(name = "CB_IDSPORT", foreignKey = @ForeignKey(name = "FK_CLUB_IDSPORT"))
     private Sport sport;
     @ManyToOne
-    @JoinColumn(name = "CB_IDCITY", foreignKey = @ForeignKey(name = "FK_IDCITY"))
+    @JoinColumn(name = "CB_IDCITY", foreignKey = @ForeignKey(name = "FK_CLUB_IDCITY"))
     private City city;
     @Size(min = 20, max = 50, message = "The instagram link must be between 20 and 50 characters")
     @Column(name = "CB_INSTAGRAM_LINK", length = 50)
@@ -52,7 +58,7 @@ public class Club implements Serializable {
     @Column(name = "CB_WHATSAPP_LINK", length = 50)
     @ApiModelProperty(dataType = "String", value = "Whatsapp link of club", example = "www.whatsapp.com")
     private String whatsappLink;
-    @Column(name = "CB_STATE",columnDefinition = "boolean default false")
+    @Column(name = "CB_STATE", columnDefinition = "boolean default false")
     private Boolean state;
 
     public Club() {
@@ -64,6 +70,14 @@ public class Club implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDescription() {

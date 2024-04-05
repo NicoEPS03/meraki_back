@@ -13,6 +13,9 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "athlete")
 @ApiModel("Model athlete")
+@NamedQueries({
+        @NamedQuery(name = "Athlete.searchDocument", query = "SELECT COUNT(a) FROM Athlete a WHERE NOT a.id = :id AND a.document = :document"),
+})
 public class Athlete implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,7 +23,7 @@ public class Athlete implements Serializable {
     @Column(name = "AT_ID")
     private Integer id;
     @ManyToOne
-    @JoinColumn(name = "AT_IDCLUB", foreignKey = @ForeignKey(name = "FK_IDCLUB"))
+    @JoinColumn(name = "AT_IDCLUB", foreignKey = @ForeignKey(name = "FK_ATHLETE_IDCLUB"))
     private Club club;
     @NotNull(message = "Names are obligatory")
     @Size(min = 5, max = 50, message = "The names must be between 5 and 50 characters")
@@ -38,7 +41,7 @@ public class Athlete implements Serializable {
     @Column(name = "AT_EPS", length = 30, nullable = false)
     private String eps;
     @ManyToOne
-    @JoinColumn(name = "AT_BORNIDCITY", foreignKey = @ForeignKey(name = "FK_BORNIDCITY"))
+    @JoinColumn(name = "AT_BORNIDCITY", foreignKey = @ForeignKey(name = "FK_ATHLETE_BORNIDCITY"))
     private City bornCity;
     @NotNull(message = "Born date are obligatory")
     @ApiModelProperty(required = true, dataType = "LocalDate", value = "2017-01-13", example = "2017-01-13")
@@ -66,7 +69,7 @@ public class Athlete implements Serializable {
     @Column(name = "AT_DOCUMENT", length = 13, nullable = false)
     private String document;
     @ManyToOne
-    @JoinColumn(name = "AT_IDDOCUMENTTYPE", foreignKey = @ForeignKey(name = "FK_IDDOCUMENTTYPE"))
+    @JoinColumn(name = "AT_IDDOCUMENTTYPE", foreignKey = @ForeignKey(name = "FK_ATHLETE_IDDOCUMENTTYPE"))
     private DocumentType documentType;
     @NotNull(message = "RH is obligatory")
     @Size(min = 2, max = 4, message = "The RH must be between 2 and 4 characters")
@@ -89,7 +92,7 @@ public class Athlete implements Serializable {
     private String schoolGrade;
     @Size(min = 5, max = 20, message = "The school grade must be between 5 and 20 characters")
     @ApiModelProperty(dataType = "String", value = "School grade of minimum 5 and maximum 20 characters", example = "Septimo", allowableValues = "range[5,20]")
-    @Column(name = "AT_SCHOOLGRADE", length = 20)
+    @Column(name = "AT_GRADE", length = 20)
     private String grade;
     @Size(min = 5, max = 50, message = "The institution must be between 5 and 50 characters")
     @ApiModelProperty(dataType = "String", value = "Institution of minimum 5 and maximum 50 characters", example = "Colegio Apostolico", allowableValues = "range[5,50]")
@@ -154,7 +157,7 @@ public class Athlete implements Serializable {
     @ApiModelProperty(dataType = "String", value = "Nationality of minimum 5 and maximum 50 characters", example = "Problemas de respiración", allowableValues = "range[5,50]")
     @Column(name = "AT_DISEASEDESCRIPTION", length = 50)
     private String diseaseDescription;
-    @Column(name = "AT_STATE",columnDefinition = "boolean default false")
+    @Column(name = "AT_STATE", columnDefinition = "boolean default false")
     private Boolean state;
 
     public Athlete() {

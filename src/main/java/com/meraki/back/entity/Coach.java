@@ -17,11 +17,11 @@ public class Coach implements Serializable {
     @ApiModelProperty(dataType = "Integer", value = "Id of coach", example = "1")
     @Column(name = "CH_ID")
     private Integer id;
-    @ManyToOne
-    @JoinColumn(name = "CH_IDUSER", foreignKey = @ForeignKey(name = "FK_IDUSER"))
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "CH_IDUSER", foreignKey = @ForeignKey(name = "FK_COACH_IDUSER"))
     private User user;
     @ManyToOne
-    @JoinColumn(name = "CH_IDCLUB", foreignKey = @ForeignKey(name = "FK_IDCLUB"))
+    @JoinColumn(name = "CH_IDCLUB", foreignKey = @ForeignKey(name = "FK_COACH_IDCLUB"))
     private Club club;
     @NotNull(message = "Name is obligatory")
     @Size(min = 5, max = 30, message = "The name must be between 5 and 30 characters")
@@ -34,7 +34,7 @@ public class Coach implements Serializable {
     @Column(name = "CH_LASTNAME", length = 30, nullable = false)
     private String lastName;
     @ManyToOne
-    @JoinColumn(name = "CH_IDDOCUMENTTYPE", foreignKey = @ForeignKey(name = "FK_IDDOCUMENTTYPE"))
+    @JoinColumn(name = "CH_IDDOCUMENTTYPE", foreignKey = @ForeignKey(name = "FK_COACH_IDDOCUMENTTYPE"))
     private DocumentType documentType;
 
     public Coach() {

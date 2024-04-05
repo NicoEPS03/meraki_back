@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.io.Serializable;
+
 @Entity
 @Table(name = "club_images")
 @ApiModel("Model club images")
@@ -17,11 +18,11 @@ public class ClubImages implements Serializable {
     @Column(name = "CI_ID")
     private Integer id;
     @ManyToOne
-    @JoinColumn(name = "CI_IDCLUB", foreignKey = @ForeignKey(name = "FK_IDCLUB"))
+    @JoinColumn(name = "CI_IDCLUB", foreignKey = @ForeignKey(name = "FK_CLUBIMAGE_IDCLUB"))
     private Club club;
     @NotNull(message = "Url is obligatory")
-    @Size(min = 30, max = 100, message = "The url must be between 30 and 100 characters")
-    @Column(name = "CI_URL", length = 100, nullable = false)
+    @Size(min = 30, max = 300, message = "The url must be between 30 and 300 characters")
+    @Column(name = "CI_URL", length = 300, nullable = false)
     @ApiModelProperty(dataType = "String", value = "Url image of club", example = "www.club...")
     private String url;
     @Column(name = "CI_BANNER")
@@ -30,6 +31,8 @@ public class ClubImages implements Serializable {
     private Boolean logo;
     @Column(name = "CI_OTHER")
     private Boolean other;
+    @Column(name = "CI_STATE", columnDefinition = "boolean default 1")
+    private Boolean state;
 
     public ClubImages() {
     }
@@ -80,5 +83,13 @@ public class ClubImages implements Serializable {
 
     public void setOther(Boolean other) {
         this.other = other;
+    }
+
+    public Boolean getState() {
+        return state;
+    }
+
+    public void setState(Boolean state) {
+        this.state = state;
     }
 }
