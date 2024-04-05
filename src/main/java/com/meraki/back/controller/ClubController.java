@@ -70,7 +70,7 @@ public class ClubController {
     }
 
     @GetMapping(value = "get/{id}", produces = "application/json")
-    @ApiOperation(value = "Get club", notes = "Retorn club by ID")
+    @ApiOperation(value = "Get club", notes = "Return club by ID")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK. The response is obtained successfully", response = Club.class),
             @ApiResponse(code = 404, message = "Not Found. Didn't found the club")})

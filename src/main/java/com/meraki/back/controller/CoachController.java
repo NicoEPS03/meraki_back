@@ -43,7 +43,7 @@ public class CoachController {
     }
 
     @GetMapping(value = "getCoachClub/{idClub}", produces = "application/json")
-    @ApiOperation(value = "Get coach", notes = "Retorn coach by IDCLub")
+    @ApiOperation(value = "Get coach", notes = "Return coach by IDCLub")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK. The response is obtained successfully", response = Coach.class),
             @ApiResponse(code = 404, message = "Not Found. Didn't found the coach")})
@@ -57,7 +57,10 @@ public class CoachController {
     @ApiOperation(value = "Insert coach", notes = "Create a new coach")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Created. The coach created correctly", response = Coach.class),
-            @ApiResponse(code = 409, message = "Conflict. The document already created")})
+            @ApiResponse(code = 409, message = "Conflict. The club dont exist"),
+            @ApiResponse(code = 409, message = "Conflict. The club are inactive"),
+            @ApiResponse(code = 409, message = "Conflict. The document already created"),
+            @ApiResponse(code = 409, message = "Conflict. The coach to this club all ready exist")})
     public ResponseEntity<?> guardar(@Valid @RequestBody Coach coach) throws IntegridadException, Exception {
         service.guardar(coach);
 
@@ -69,7 +72,10 @@ public class CoachController {
     @ApiResponses(value = {
             @ApiResponse(code = 204, message = "Ok. The coach edited correctly"),
             @ApiResponse(code = 404, message = "Not Found. Didn't found the coach"),
-            @ApiResponse(code = 409, message = "Conflict. The document already created")})
+            @ApiResponse(code = 409, message = "Conflict. The club dont exist"),
+            @ApiResponse(code = 409, message = "Conflict. The club are inactive"),
+            @ApiResponse(code = 409, message = "Conflict. The document already created"),
+            @ApiResponse(code = 409, message = "Conflict. The coach to this club all ready exist")})
     public ResponseEntity<?> editar(@Valid @RequestBody Coach coach) throws ModelNotFoundException, IntegridadException, Exception {
         service.editar(coach);
 

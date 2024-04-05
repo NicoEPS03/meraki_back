@@ -42,7 +42,7 @@ public class AthleteController {
     }
 
     @GetMapping(value = "get/{id}", produces = "application/json")
-    @ApiOperation(value = "Get athlete", notes = "Retorn athlete by ID")
+    @ApiOperation(value = "Get athlete", notes = "Return athlete by ID")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK. The response is obtained successfully", response = Athlete.class),
             @ApiResponse(code = 404, message = "Not Found. Didn't found the athlete")})
@@ -56,7 +56,9 @@ public class AthleteController {
     @ApiOperation(value = "Insert athlete", notes = "Create a new athlete")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Created. The athlete created correctly", response = Athlete.class),
-            @ApiResponse(code = 409, message = "Conflict. The document already created")})
+            @ApiResponse(code = 409, message = "Conflict. The document already created"),
+            @ApiResponse(code = 409, message = "Conflict. The club dont exist"),
+            @ApiResponse(code = 409, message = "Conflict. Maximum number of athletes")})
     public ResponseEntity<?> guardar(@Valid @RequestBody Athlete athlete) throws IntegridadException, Exception {
         service.guardar(athlete);
 

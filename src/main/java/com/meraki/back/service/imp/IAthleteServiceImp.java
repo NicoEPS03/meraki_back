@@ -51,6 +51,9 @@ public class IAthleteServiceImp implements IAthleteService {
         if (repoClub.findById(athlete.getClub().getId()).isEmpty()) {
             throw new IntegridadException("Club dont exist");
         }
+        if (repoAthlete.searchAthlete(athlete.getClub().getId()) > 20) {
+            throw new IntegridadException("Maximum number of athletes");
+        }
         athlete.setState(true);
         this.repoAthlete.save(athlete);
     }

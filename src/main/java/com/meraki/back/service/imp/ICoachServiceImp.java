@@ -59,12 +59,15 @@ public class ICoachServiceImp implements ICoachService {
 
     @Override
     public void guardar(Coach coach) throws IntegridadException {
+        if (repoClub.findById(coach.getClub().getId()).isEmpty()) {
+            throw new IntegridadException("Club dont exist");
+        }
         if (validarEquipoActivo(coach.getClub().getId())) {
             if (repoUser.findByDocument(coach.getUser().getDocument()) != null) {
                 throw new IntegridadException("Document all ready exist");
             }
             if (repoCoach.coachExits(coach.getClub().getId()) != 0) {
-                throw new IntegridadException("Coach to this all ready exist");
+                throw new IntegridadException("Coach to this club all ready exist");
             }
             Rol rol = new Rol();
             rol.setId(2);

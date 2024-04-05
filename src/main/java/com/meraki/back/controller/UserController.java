@@ -32,7 +32,7 @@ public class UserController {
     }
 
     @GetMapping(value = "get/{id}", produces = "application/json")
-    @ApiOperation(value = "Get user", notes = "Retorn user by ID")
+    @ApiOperation(value = "Get user", notes = "Return user by ID")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK. The response is obtained successfully", response = User.class),
             @ApiResponse(code = 404, message = "Not Found. Didn't found the user")})

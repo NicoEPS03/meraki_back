@@ -44,7 +44,7 @@ public class FamilyController {
     }
 
     @GetMapping(value = "get/{id}", produces = "application/json")
-    @ApiOperation(value = "Get family", notes = "Retorn family by ID")
+    @ApiOperation(value = "Get family", notes = "Return family by ID")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK. The response is obtained successfully", response = Family.class),
             @ApiResponse(code = 404, message = "Not Found. Didn't found the family")})
@@ -58,7 +58,9 @@ public class FamilyController {
     @ApiOperation(value = "Insert family", notes = "Create a new family")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Created. The family created correctly", response = Athlete.class),
-            @ApiResponse(code = 409, message = "Conflict. The document already created")})
+            @ApiResponse(code = 409, message = "Conflict. The document already created"),
+            @ApiResponse(code = 409, message = "Conflict. The athlete dont exist"),
+            @ApiResponse(code = 409, message = "Conflict. The email all ready exists")})
     public ResponseEntity<?> guardar(@Valid @RequestBody Family family) throws IntegridadException, Exception {
         service.guardar(family);
 
@@ -69,8 +71,9 @@ public class FamilyController {
     @ApiOperation(value = "Edit family", notes = "Edit a family")
     @ApiResponses(value = {
             @ApiResponse(code = 204, message = "Ok. The athlete edited correctly"),
-            @ApiResponse(code = 404, message = "Not Found. Didn't found the family"),
-            @ApiResponse(code = 409, message = "Conflict. The document already created")})
+            @ApiResponse(code = 404, message = "Not Found. Didn't found the familiar"),
+            @ApiResponse(code = 409, message = "Conflict. The document already created"),
+            @ApiResponse(code = 409, message = "Conflict. The athlete dont exist")})
     public ResponseEntity<?> editar(@Valid @RequestBody Family family) throws ModelNotFoundException, IntegridadException, Exception {
         service.editar(family);
 
