@@ -4,21 +4,28 @@ package com.meraki.back.service.imp;
 import com.meraki.back.dto.ClubAdminDto;
 import com.meraki.back.dto.ClubFilterDto;
 import com.meraki.back.entity.Club;
+import com.meraki.back.entity.Coach;
 import com.meraki.back.exception.ArgumentRequiredException;
 import com.meraki.back.exception.IntegridadException;
 import com.meraki.back.exception.ModelNotFoundException;
 import com.meraki.back.repository.IClubRepo;
+import com.meraki.back.repository.ICoachRepo;
 import com.meraki.back.service.IClubService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
+
 @Service
 public class IClubServiceImp implements IClubService {
 
     @Autowired
     private IClubRepo repoClub;
+
+    @Autowired
+    private ICoachRepo repoCoach;
 
     private Boolean validarExistenciaPorId(int id) {
         return repoClub.existsById(id);
@@ -98,6 +105,8 @@ public class IClubServiceImp implements IClubService {
         clubDto.setDecription(club.getDescription());
         clubDto.setMunicipio(club.getCity().getNombre());
         clubDto.setSport(club.getSport().getName());
+        Coach coach = repoCoach.getCoach(club.getId());
+        clubDto.setDelegado((Objects.nonNull(coach)) ? repoCoach.getCoach(club.getId()).getName() + repoCoach.getCoach(club.getId()).getLastName() : "Sin delegado");
         return clubDto;
     }
 

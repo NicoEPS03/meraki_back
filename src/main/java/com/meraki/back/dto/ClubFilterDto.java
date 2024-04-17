@@ -10,6 +10,8 @@ public class ClubFilterDto implements Serializable {
     private String sport;
     private String municipio;
 
+    private String delegado;
+
     public Integer getId() {
         return id;
     }
@@ -56,5 +58,13 @@ public class ClubFilterDto implements Serializable {
 
     public void setMunicipio(String municipio) {
         this.municipio = municipio;
+    }
+
+    public String getDelegado() {
+        return delegado;
+    }
+
+    public void setDelegado(String delegado) {
+        this.delegado = delegado;
     }
 }
