@@ -102,7 +102,7 @@ public class IClubServiceImp implements IClubService {
         final ClubFilterDto clubDto = new ClubFilterDto();
         clubDto.setId(club.getId());
         clubDto.setName(club.getName());
-        clubDto.setDecription(club.getDescription());
+        clubDto.setDescription(club.getDescription());
         clubDto.setMunicipio(club.getCity().getNombre());
         clubDto.setSport(club.getSport().getName());
         Coach coach = repoCoach.getCoach(club.getId());
