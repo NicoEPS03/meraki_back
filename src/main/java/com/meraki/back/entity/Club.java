@@ -34,27 +34,27 @@ public class Club implements Serializable {
     @ManyToOne
     @JoinColumn(name = "CB_IDCITY", foreignKey = @ForeignKey(name = "FK_CLUB_IDCITY"))
     private City city;
-    @Size(min = 20, max = 50, message = "The instagram link must be between 20 and 50 characters")
+    @Size(max = 50, message = "The instagram link must be between 20 and 50 characters")
     @Column(name = "CB_INSTAGRAM_LINK", length = 50)
     @ApiModelProperty(dataType = "String", value = "Instagram link of club", example = "www.instagram.com")
     private String instragramLink;
-    @Size(min = 20, max = 50, message = "The facebook link must be between 20 and 50 characters")
+    @Size(max = 50, message = "The facebook link must be between 20 and 50 characters")
     @Column(name = "CB_FACEBOOK_LINK", length = 50)
     @ApiModelProperty(dataType = "String", value = "Facebook link of club", example = "www.facebook.com")
     private String facebookLink;
-    @Size(min = 20, max = 50, message = "The twitter link must be between 20 and 50 characters")
+    @Size(max = 50, message = "The twitter link must be between 20 and 50 characters")
     @Column(name = "CB_TWITTER_LINK", length = 50)
     @ApiModelProperty(dataType = "String", value = "Twitter link of club", example = "www.twitter.com")
     private String twitterLink;
-    @Size(min = 20, max = 50, message = "The tiktok link must be between 20 and 50 characters")
+    @Size(max = 50, message = "The tiktok link must be between 20 and 50 characters")
     @Column(name = "CB_TIKTOK_LINK", length = 50)
     @ApiModelProperty(dataType = "String", value = "Tiktok link of club", example = "www.tiktok.com")
     private String tiktokLink;
-    @Size(min = 20, max = 50, message = "The youtube link must be between 20 and 50 characters")
+    @Size(max = 50, message = "The youtube link must be between 20 and 50 characters")
     @Column(name = "CB_YOUTUBE_LINK", length = 50)
     @ApiModelProperty(dataType = "String", value = "Youtube link of club", example = "www.youtube.com")
     private String youtubeLink;
-    @Size(min = 20, max = 50, message = "The whatsapp link must be between 20 and 50 characters")
+    @Size(max = 50, message = "The whatsapp link must be between 20 and 50 characters")
     @Column(name = "CB_WHATSAPP_LINK", length = 50)
     @ApiModelProperty(dataType = "String", value = "Whatsapp link of club", example = "www.whatsapp.com")
     private String whatsappLink;

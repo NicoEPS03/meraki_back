@@ -27,6 +27,17 @@ public class ClubController {
     @Autowired
     private IClubService service;
 
+    @GetMapping(value = "/getNumClubs/{sport}/{city}", produces = "application/json")
+    @Operation(description = "Get all clubs on admin view")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "OK. The response is obtained successfully", content =
+                    { @Content(mediaType = "application/json", schema =
+                    @Schema(implementation = ClubAdminDto.class)) })})
+    public ResponseEntity<?> retonarNumClubs(@PathVariable int sport, @PathVariable int city) {
+        Integer numClubs = service.numClubs(sport, city);
+        return new ResponseEntity<Integer>(numClubs, HttpStatus.OK);
+    }
+
     @GetMapping(value = "/getPageAdmin/{page}/{size}", produces = "application/json")
     @Operation(description = "Get all clubs on admin view")
     @ApiResponses(value = {

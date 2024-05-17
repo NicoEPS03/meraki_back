@@ -18,6 +18,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
+@CrossOrigin(origins= {"*"}, maxAge = 4800, allowCredentials = "false" )
 @RestController
 @RequestMapping("/family")
 @Validated
@@ -36,15 +39,15 @@ public class FamilyController {
         return new ResponseEntity<Page<FamilyDto>>(listAthlete, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/getPageAthlete/{page}/{size}/{athlete}", produces = "application/json")
+    @GetMapping(value = "/getPageAthlete/{athlete}", produces = "application/json")
     @Operation(description = "Return all familys of one athlete")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "OK. The response is obtained successfully", content =
                     { @Content(mediaType = "application/json", schema =
                     @Schema(implementation =  Family.class)) })})
-    public ResponseEntity<?> retonarPaginadoAthlete(@PathVariable int page, @PathVariable int size, @PathVariable int athlete) {
-        Page<FamilyDto> listAthlete = service.retornarPaginadoFamily(page, size, athlete);
-        return new ResponseEntity<Page<FamilyDto>>(listAthlete, HttpStatus.OK);
+    public ResponseEntity<?> retonarPaginadoAthlete( @PathVariable int athlete) {
+        List<FamilyDto> listAthlete = service.retornarPaginadoFamily(athlete);
+        return new ResponseEntity<List<FamilyDto>>(listAthlete, HttpStatus.OK);
     }
 
     @GetMapping(value = "get/{id}", produces = "application/json")

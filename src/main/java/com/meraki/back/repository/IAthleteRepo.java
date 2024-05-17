@@ -7,13 +7,18 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
+
 public interface IAthleteRepo extends JpaRepository<Athlete, Integer> {
     public int searchDocument(int id, String document);
     @Query(value = "SELECT COUNT(*) FROM Athlete a WHERE a.at_idclub = :club AND a.at_state = true", nativeQuery = true)
     public int searchAthlete(@Param("club")int club);
 
-    public Athlete findByDocument(String document);
+    public Athlete findByDocumentAndState(String document, boolean state);
 
     @Query(value = "SELECT * FROM Athlete a WHERE a.at_idclub = :club AND a.at_state = true", nativeQuery = true)
     public Page<Athlete> findAllStateTrue(@Param("club") int club, Pageable pageable);
+
+    @Query(value = "SELECT * FROM Athlete a WHERE a.at_idclub = :club ", nativeQuery = true)
+    public List<Athlete> findAllClub(@Param("club") int club);
 }

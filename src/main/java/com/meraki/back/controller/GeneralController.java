@@ -1,6 +1,7 @@
 package com.meraki.back.controller;
 
 import com.meraki.back.entity.City;
+import com.meraki.back.entity.DocumentType;
 import com.meraki.back.entity.Sport;
 import com.meraki.back.service.IGeneralService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -40,5 +41,27 @@ public class GeneralController {
     public ResponseEntity<?> retonarCiudadesDeportes(@PathVariable int id) {
         List<City> cityList = service.listarCiudadesDeporte(id);
         return new ResponseEntity<List<City>>(cityList, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/getCities", produces = "application/json")
+    @Operation(description = "Return all cities")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "OK. The response is obtained successfully", content =
+                    { @Content(mediaType = "application/json", schema =
+                    @Schema(implementation =  City.class)) })})
+    public ResponseEntity<?> retonarCidudaes() {
+        List<City> cityList = service.listaCiudades();
+        return new ResponseEntity<List<City>>(cityList, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/getDocuments", produces = "application/json")
+    @Operation(description = "Return all documents")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "OK. The response is obtained successfully", content =
+                    { @Content(mediaType = "application/json", schema =
+                    @Schema(implementation =  DocumentType.class)) })})
+    public ResponseEntity<?> retonarDocumentos() {
+        List<DocumentType> documentTypes = service.listaDocumentos();
+        return new ResponseEntity<List<DocumentType>>(documentTypes, HttpStatus.OK);
     }
 }

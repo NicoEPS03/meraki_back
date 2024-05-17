@@ -12,7 +12,7 @@ import java.io.Serializable;
 @Table(name = "user")
 @ApiModel("Model user")
 @NamedQueries({
-        @NamedQuery(name = "User.searchDocument", query = "SELECT COUNT(m) FROM User m WHERE NOT m.id = :id AND m.document = :document"),
+        @NamedQuery(name = "User.searchDocument", query = "SELECT COUNT(m) FROM User m WHERE NOT m.id = :id AND m.document = :document AND m.state = true"),
 })
 public class User implements Serializable {
     @Id

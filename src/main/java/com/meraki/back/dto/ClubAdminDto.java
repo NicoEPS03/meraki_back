@@ -8,6 +8,9 @@ public class ClubAdminDto implements Serializable {
     private String sport;
     private String municipio;
 
+    private Boolean coach;
+    private Boolean state;
+
     public Integer getId() {
         return id;
     }
@@ -38,5 +41,21 @@ public class ClubAdminDto implements Serializable {
 
     public void setMunicipio(String municipio) {
         this.municipio = municipio;
+    }
+
+    public Boolean getState() {
+        return state;
+    }
+
+    public void setState(Boolean state) {
+        this.state = state;
+    }
+
+    public Boolean getCoach() {
+        return coach;
+    }
+
+    public void setCoach(Boolean coach) {
+        this.coach = coach;
     }
 }

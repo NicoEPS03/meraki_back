@@ -1,11 +1,16 @@
 package com.meraki.back.dto;
 
+import com.meraki.back.entity.DocumentType;
+import com.meraki.back.entity.User;
+
 public class CoachDto {
     private Integer id;
     private String name;
     private String lastName;
     private String club;
-    private String document;
+    private User user;
+    private DocumentType documentType;
+
 
     public Integer getId() {
         return id;
@@ -39,11 +44,19 @@ public class CoachDto {
         this.club = club;
     }
 
-    public String getDocument() {
-        return document;
+    public User getUser() {
+        return user;
     }
 
-    public void setDocument(String document) {
-        this.document = document;
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public DocumentType getDocumentType() {
+        return documentType;
+    }
+
+    public void setDocumentType(DocumentType documentType) {
+        this.documentType = documentType;
     }
 }

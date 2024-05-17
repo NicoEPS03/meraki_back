@@ -1,11 +1,13 @@
 package com.meraki.back.dto;
 
+import com.meraki.back.entity.DocumentType;
+
 public class FamilyDto {
     private Integer id;
     private Integer idAthlete;
     private String name;
     private String document;
-    private String documentType;
+    private DocumentType documentType;
     private String phone;
     private String email;
     private String company;
@@ -45,11 +47,11 @@ public class FamilyDto {
         this.document = document;
     }
 
-    public String getDocumentType() {
+    public DocumentType getDocumentType() {
         return documentType;
     }
 
-    public void setDocumentType(String documentType) {
+    public void setDocumentType(DocumentType documentType) {
         this.documentType = documentType;
     }
 

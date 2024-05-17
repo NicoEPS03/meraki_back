@@ -45,7 +45,7 @@ public class IAthleteServiceImp implements IAthleteService {
 
     @Override
     public void guardar(Athlete athlete) throws IntegridadException {
-        if (repoAthlete.findByDocument(athlete.getDocument()) != null || repoUser.findByDocument(athlete.getDocument()) != null) {
+        if (repoAthlete.findByDocumentAndState(athlete.getDocument(), true) != null || repoUser.findByDocumentAndState(athlete.getDocument(),true) != null) {
             throw new IntegridadException("Document all ready exist");
         }
         if (repoClub.findById(athlete.getClub().getId()).isEmpty()) {

@@ -39,7 +39,7 @@ public class IUserServiceImp implements IUserService {
 
     @Override
     public void guardar(User user) throws IntegridadException {
-        if (repoUser.findByDocument(user.getDocument()) != null) {
+        if (repoUser.findByDocumentAndState(user.getDocument(), true) != null) {
             throw new IntegridadException("Document all ready exist");
         }
         user.setState(true);

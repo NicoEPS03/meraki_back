@@ -1,6 +1,5 @@
 package com.meraki.back.controller;
 
-import com.meraki.back.entity.Family;
 import com.meraki.back.entity.User;
 import com.meraki.back.exception.IntegridadException;
 import com.meraki.back.exception.ModelNotFoundException;
@@ -18,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin(origins= {"*"}, maxAge = 4800, allowCredentials = "false" )
 @RestController
 @RequestMapping("/user")
 @Validated
