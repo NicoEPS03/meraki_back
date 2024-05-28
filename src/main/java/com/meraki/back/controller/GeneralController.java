@@ -1,14 +1,15 @@
 package com.meraki.back.controller;
 
-import com.meraki.back.entity.City;
-import com.meraki.back.entity.DocumentType;
-import com.meraki.back.entity.Sport;
+import com.meraki.back.dto.UserDto;
+import com.meraki.back.entity.*;
+import com.meraki.back.exception.ModelNotFoundException;
 import com.meraki.back.service.IGeneralService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -63,5 +64,12 @@ public class GeneralController {
     public ResponseEntity<?> retonarDocumentos() {
         List<DocumentType> documentTypes = service.listaDocumentos();
         return new ResponseEntity<List<DocumentType>>(documentTypes, HttpStatus.OK);
+    }
+    @PostMapping(value = "/login", consumes = "application/json")
+    @Operation(description = "Login to admin")
+    public ResponseEntity<?> login(@Valid @RequestBody UserDto userDto) throws ModelNotFoundException {
+        User user = service.login(userDto);
+
+        return new ResponseEntity<Object>(user, HttpStatus.OK);
     }
 }

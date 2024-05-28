@@ -1,6 +1,5 @@
 package com.meraki.back.repository;
 
-import com.meraki.back.entity.Club;
 import com.meraki.back.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,6 +19,7 @@ public interface IUserRepo extends JpaRepository<User, Integer> {
     public User findByDocumentAlready(@Param("document") String document, @Param("id") int id);
 
     public int searchDocument(int id, String document);
-
+    @Query(value = "SELECT * FROM User u WHERE u.usr_document = :document AND u.usr_password = :password AND u.usr_state = true", nativeQuery = true)
+    public User login(@Param("document") String document, @Param("password") String password);
 
 }
