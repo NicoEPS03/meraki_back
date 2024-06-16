@@ -10,6 +10,7 @@ import com.meraki.back.exception.ArgumentRequiredException;
 import com.meraki.back.exception.IntegridadException;
 import com.meraki.back.exception.ModelNotFoundException;
 import com.meraki.back.repository.IAthleteRepo;
+import com.meraki.back.repository.IClubImagesRepo;
 import com.meraki.back.repository.IClubRepo;
 import com.meraki.back.repository.ICoachRepo;
 import com.meraki.back.service.IClubService;
@@ -30,6 +31,8 @@ public class IClubServiceImp implements IClubService {
     private ICoachRepo repoCoach;
     @Autowired
     private IAthleteRepo repoAthlete;
+    @Autowired
+    private IClubImagesRepo repoImages;
 
     private Boolean validarExistenciaPorId(int id) {
         return repoClub.existsById(id);
@@ -116,6 +119,7 @@ public class IClubServiceImp implements IClubService {
     private ClubFilterDto convertToClubDtoFilter(final Club club) {
         final ClubFilterDto clubDto = new ClubFilterDto();
         clubDto.setId(club.getId());
+        clubDto.setImages(repoImages.clubImages(club.getId()));
         clubDto.setName(club.getName());
         clubDto.setDescription(club.getDescription());
         clubDto.setMunicipio(club.getCity().getNombre());

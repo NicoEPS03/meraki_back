@@ -5,10 +5,12 @@ import io.swagger.annotations.ApiModelProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.Data;
 
 import java.io.Serializable;
 
 @Entity
+@Data
 @Table(name = "club")
 @ApiModel("Model club")
 public class Club implements Serializable {
@@ -64,99 +66,4 @@ public class Club implements Serializable {
     public Club() {
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Sport getSport() {
-        return sport;
-    }
-
-    public void setSport(Sport sport) {
-        this.sport = sport;
-    }
-
-    public City getCity() {
-        return city;
-    }
-
-    public void setCity(City city) {
-        this.city = city;
-    }
-
-    public String getInstragramLink() {
-        return instragramLink;
-    }
-
-    public void setInstragramLink(String instragramLink) {
-        this.instragramLink = instragramLink;
-    }
-
-    public String getFacebookLink() {
-        return facebookLink;
-    }
-
-    public void setFacebookLink(String facebookLink) {
-        this.facebookLink = facebookLink;
-    }
-
-    public String getTwitterLink() {
-        return twitterLink;
-    }
-
-    public void setTwitterLink(String twitterLink) {
-        this.twitterLink = twitterLink;
-    }
-
-    public String getTiktokLink() {
-        return tiktokLink;
-    }
-
-    public void setTiktokLink(String tiktokLink) {
-        this.tiktokLink = tiktokLink;
-    }
-
-    public String getYoutubeLink() {
-        return youtubeLink;
-    }
-
-    public void setYoutubeLink(String youtubeLink) {
-        this.youtubeLink = youtubeLink;
-    }
-
-    public String getWhatsappLink() {
-        return whatsappLink;
-    }
-
-    public void setWhatsappLink(String whatsappLink) {
-        this.whatsappLink = whatsappLink;
-    }
-
-    public Boolean getState() {
-        return state;
-    }
-
-    public void setState(Boolean state) {
-        this.state = state;
-    }
 }

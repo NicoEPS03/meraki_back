@@ -62,6 +62,19 @@ public class CoachController {
         return new ResponseEntity<Object>(coachDto, HttpStatus.OK);
     }
 
+    @GetMapping(value = "getCoachUser/{idUser}", produces = "application/json")
+    @Operation(description = "Return coach by IDUser")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "OK. The response is obtained successfully", content =
+                    { @Content(mediaType = "application/json", schema =
+                    @Schema(implementation =  Coach.class)) }),
+            @ApiResponse(responseCode = "404", description = "Not Found. Didn't found the coach")})
+    public ResponseEntity<?> retornarCoachUser(@PathVariable("idUser") int idUser) throws ModelNotFoundException, Exception {
+        CoachDto coachDto = service.retornarCoachUser(idUser);
+
+        return new ResponseEntity<Object>(coachDto, HttpStatus.OK);
+    }
+
     @PostMapping(value = "/insert", consumes = "application/json")
     @Operation(description = "Create a new coach")
     @ApiResponses(value = {

@@ -8,5 +8,7 @@ import org.springframework.data.domain.Page;
 public interface ICoachService extends ICrud<Coach, Integer> {
     public CoachDto retornarCoachClub(int idClub) throws ModelNotFoundException;
 
+    public CoachDto retornarCoachUser(int idUser) throws ModelNotFoundException;
+
     public Page<CoachDto> retornarPaginadoDto(int page, int size);
 }

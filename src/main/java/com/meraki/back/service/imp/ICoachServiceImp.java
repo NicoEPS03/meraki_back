@@ -134,6 +134,23 @@ public class ICoachServiceImp implements ICoachService {
         }
     }
 
+    public CoachDto retornarCoachUser(int idUser) throws ModelNotFoundException {
+        CoachDto coachDto = new CoachDto();
+        Coach coach = this.repoCoach.getCoachByUser(idUser);
+        if (Objects.nonNull(coach)) {
+            coachDto.setId(coach.getId());
+            coachDto.setName(coach.getName());
+            coachDto.setLastName(coach.getLastName());
+            coachDto.setUser(coach.getUser());
+            coachDto.setDocumentType(coach.getDocumentType());
+            coachDto.setClub(coach.getClub().getId().toString());
+            return coachDto;
+        } else {
+            CoachDto co = new CoachDto();
+            return co;
+        }
+    }
+
     private CoachDto convertToCoachDto(final Coach coach) {
         final CoachDto coachDto = new CoachDto();
         coachDto.setId(coach.getId());

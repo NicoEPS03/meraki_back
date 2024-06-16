@@ -1,5 +1,6 @@
 package com.meraki.back.controller;
 
+import com.meraki.back.dto.ClubImagesDto;
 import com.meraki.back.entity.ClubImages;
 import com.meraki.back.exception.IntegridadException;
 import com.meraki.back.exception.ModelNotFoundException;
@@ -33,7 +34,7 @@ public class ClubImagesController {
                     @Schema(implementation =  ClubImages.class)) }),
             @ApiResponse(responseCode = "404", description = "Not Found. Didn't found the athlete")})
     public ResponseEntity<?> retornarClubImages(@PathVariable("id") int id) throws ModelNotFoundException, Exception {
-        List<ClubImages> clubImages = service.retonarPorIdClub(id);
+        List<ClubImagesDto> clubImages = service.retonarPorIdClub(id);
 
         return new ResponseEntity<Object>(clubImages, HttpStatus.OK);
     }
