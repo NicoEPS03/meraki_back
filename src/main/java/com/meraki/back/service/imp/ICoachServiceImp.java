@@ -63,7 +63,7 @@ public class ICoachServiceImp implements ICoachService {
             throw new IntegridadException("Club dont exist");
         }
         if (validarEquipoActivo(coach.getClub().getId())) {
-            if (repoUser.findByDocument(coach.getUser().getDocument()) != null) {
+            if (repoUser.findByDocumentAndState(coach.getUser().getDocument(), true) != null) {
                 throw new IntegridadException("Document all ready exist");
             }
             if (repoCoach.coachExits(coach.getClub().getId()) != 0) {
@@ -125,6 +125,25 @@ public class ICoachServiceImp implements ICoachService {
             coachDto.setId(coach.getId());
             coachDto.setName(coach.getName());
             coachDto.setLastName(coach.getLastName());
+            coachDto.setUser(coach.getUser());
+            coachDto.setDocumentType(coach.getDocumentType());
+            return coachDto;
+        } else {
+            CoachDto co = new CoachDto();
+            return co;
+        }
+    }
+
+    public CoachDto retornarCoachUser(int idUser) throws ModelNotFoundException {
+        CoachDto coachDto = new CoachDto();
+        Coach coach = this.repoCoach.getCoachByUser(idUser);
+        if (Objects.nonNull(coach)) {
+            coachDto.setId(coach.getId());
+            coachDto.setName(coach.getName());
+            coachDto.setLastName(coach.getLastName());
+            coachDto.setUser(coach.getUser());
+            coachDto.setDocumentType(coach.getDocumentType());
+            coachDto.setClub(coach.getClub().getId().toString());
             return coachDto;
         } else {
             CoachDto co = new CoachDto();
@@ -138,7 +157,7 @@ public class ICoachServiceImp implements ICoachService {
         coachDto.setName(coach.getName());
         coachDto.setLastName(coach.getLastName());
         coachDto.setClub(coach.getClub().getName());
-        coachDto.setDocument(coach.getUser().getDocument());
+        coachDto.setUser(coach.getUser());
         return coachDto;
     }
 }

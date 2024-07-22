@@ -10,7 +10,8 @@ public interface ICoachRepo extends JpaRepository<Coach, Integer> {
     public int coachExits(@Param("club") int club);
     @Query(value = "SELECT COUNT(*) FROM Coach c WHERE c.ch_idclub = :club AND NOT c.ch_id = :id", nativeQuery = true)
     public int coachAlreadyExits(@Param("club") int club, @Param("id") int id);
-
     @Query(value = "SELECT c.* FROM Coach c JOIN User u ON u.usr_id = c.ch_iduser WHERE c.ch_idclub = :club AND u.usr_state = true", nativeQuery = true)
     public Coach getCoach(@Param("club") int club);
+    @Query(value = "SELECT c.* FROM Coach c JOIN User u ON u.usr_id = c.ch_iduser WHERE c.ch_iduser = :user AND u.usr_state = true", nativeQuery = true)
+    public Coach getCoachByUser(@Param("user") int user);
 }

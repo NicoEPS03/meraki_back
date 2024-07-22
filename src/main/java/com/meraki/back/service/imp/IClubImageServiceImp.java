@@ -1,8 +1,11 @@
 package com.meraki.back.service.imp;
 
+import com.meraki.back.dto.ClubFilterDto;
+import com.meraki.back.dto.ClubImagesDto;
 import com.meraki.back.entity.Athlete;
 import com.meraki.back.entity.Club;
 import com.meraki.back.entity.ClubImages;
+import com.meraki.back.entity.Coach;
 import com.meraki.back.exception.ArgumentRequiredException;
 import com.meraki.back.exception.IntegridadException;
 import com.meraki.back.exception.ModelNotFoundException;
@@ -15,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class IClubImageServiceImp implements IClubImagesService {
@@ -90,8 +94,31 @@ public class IClubImageServiceImp implements IClubImagesService {
     }
 
     @Override
-    public List<ClubImages> retonarPorIdClub(int idClub) {
-        List<ClubImages> clubImagesList = this.repoClubImages.clubImages(idClub);
-        return clubImagesList;
+    public List<ClubImagesDto> retonarPorIdClub(int idClub) {
+        List<ClubImages> result = this.repoClubImages.clubImages(idClub);
+
+        List<ClubImagesDto> imagesDto = new ArrayList<ClubImagesDto>();
+        result.forEach(data ->{
+            final ClubImagesDto imageDto = new ClubImagesDto();
+            imageDto.setId(data.getId());
+            imageDto.setUrl(data.getUrl());
+            imageDto.setLogo(data.getLogo());
+            imageDto.setBanner(data.getBanner());
+            imageDto.setOther(data.getOther());
+            imageDto.setState(data.getState());
+            imagesDto.add(imageDto);
+        });
+        return imagesDto;
+    }
+
+    private ClubImagesDto convertToClubImagesDtoFilter(final ClubImages images) {
+        final ClubImagesDto imagesDto = new ClubImagesDto();
+        imagesDto.setId(images.getId());
+        imagesDto.setUrl(images.getUrl());
+        imagesDto.setLogo(images.getLogo());
+        imagesDto.setBanner(images.getBanner());
+        imagesDto.setOther(images.getOther());
+        imagesDto.setState(images.getState());
+        return imagesDto;
     }
 }

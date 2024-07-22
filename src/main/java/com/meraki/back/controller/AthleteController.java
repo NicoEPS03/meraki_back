@@ -5,9 +5,11 @@ import com.meraki.back.entity.Athlete;
 import com.meraki.back.exception.IntegridadException;
 import com.meraki.back.exception.ModelNotFoundException;
 import com.meraki.back.service.IAthleteService;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,7 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
+@CrossOrigin(origins= {"*"}, maxAge = 4800, allowCredentials = "false" )
 @RestController
 @RequestMapping("/athlete")
 @Validated
@@ -24,28 +26,34 @@ public class AthleteController {
     private IAthleteService service;
 
     @GetMapping(value = "/getPageAdmin/{page}/{size}", produces = "application/json")
-    @ApiOperation(value = "Get all athletes admin", notes = "Return all athletes admin")
+    @Operation(description = "Get all athletes admin")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OK. The response is obtained successfully", response = Athlete.class)})
+            @ApiResponse(responseCode = "200", description = "OK. The response is obtained successfully", content =
+                    { @Content(mediaType = "application/json", schema =
+                    @Schema(implementation = Athlete.class)) })})
     public ResponseEntity<?> retonarPaginadoAdmin(@PathVariable int page, @PathVariable int size) {
         Page<AthleteDto> listAthlete = service.retornarPaginadoDtoAdmin(page, size);
         return new ResponseEntity<Page<AthleteDto>>(listAthlete, HttpStatus.OK);
     }
 
     @GetMapping(value = "/getPageClub/{page}/{size}/{club}", produces = "application/json")
-    @ApiOperation(value = "Get all athletes club", notes = "Return all athletes club")
+    @Operation(description = "Get all athletes club")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OK. The response is obtained successfully", response = Athlete.class)})
+            @ApiResponse(responseCode = "200", description = "OK. The response is obtained successfully", content =
+                    { @Content(mediaType = "application/json", schema =
+                    @Schema(implementation = Athlete.class)) } )})
     public ResponseEntity<?> retonarPaginadoClub(@PathVariable int page, @PathVariable int size, @PathVariable int club) {
         Page<AthleteDto> listAthlete = service.retornarPaginadoDtoClub(page, size, club);
         return new ResponseEntity<Page<AthleteDto>>(listAthlete, HttpStatus.OK);
     }
 
     @GetMapping(value = "get/{id}", produces = "application/json")
-    @ApiOperation(value = "Get athlete", notes = "Return athlete by ID")
+    @Operation(description = "Get athlete")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OK. The response is obtained successfully", response = Athlete.class),
-            @ApiResponse(code = 404, message = "Not Found. Didn't found the athlete")})
+            @ApiResponse(responseCode = "200", description = "OK. The response is obtained successfully", content =
+                    { @Content(mediaType = "application/json", schema =
+                    @Schema(implementation = Athlete.class)) }),
+            @ApiResponse(responseCode = "404", description = "Not Found. Didn't found the athlete")})
     public ResponseEntity<?> retornarAthlete(@PathVariable("id") int id) throws ModelNotFoundException, Exception {
         Athlete athlete = service.retonarPorId(id);
 
@@ -53,12 +61,14 @@ public class AthleteController {
     }
 
     @PostMapping(value = "/insert", consumes = "application/json")
-    @ApiOperation(value = "Insert athlete", notes = "Create a new athlete")
+    @Operation(description = "Insert athlete")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Created. The athlete created correctly", response = Athlete.class),
-            @ApiResponse(code = 409, message = "Conflict. The document already created"),
-            @ApiResponse(code = 409, message = "Conflict. The club dont exist"),
-            @ApiResponse(code = 409, message = "Conflict. Maximum number of athletes")})
+            @ApiResponse(responseCode = "201", description = "Created. The athlete created correctly", content =
+                    { @Content(mediaType = "application/json", schema =
+                    @Schema(implementation = Athlete.class)) }),
+            @ApiResponse(responseCode = "409", description = "Conflict. The document already created"),
+            @ApiResponse(responseCode = "409", description = "Conflict. The club dont exist"),
+            @ApiResponse(responseCode = "409", description = "Conflict. Maximum number of athletes")})
     public ResponseEntity<?> guardar(@Valid @RequestBody Athlete athlete) throws IntegridadException, Exception {
         service.guardar(athlete);
 
@@ -66,11 +76,11 @@ public class AthleteController {
     }
 
     @PutMapping(value = "/edit", consumes = "application/json")
-    @ApiOperation(value = "Edit athlete", notes = "Edit a athlete")
+    @Operation(description = "Edit athlete")
     @ApiResponses(value = {
-            @ApiResponse(code = 204, message = "Ok. The athlete edited correctly"),
-            @ApiResponse(code = 404, message = "Not Found. Didn't found the athlete"),
-            @ApiResponse(code = 409, message = "Conflict. The document already created")})
+            @ApiResponse(responseCode = "204", description = "Ok. The athlete edited correctly"),
+            @ApiResponse(responseCode = "404", description = "Not Found. Didn't found the athlete"),
+            @ApiResponse(responseCode = "409", description = "Conflict. The document already created")})
     public ResponseEntity<?> editar(@Valid @RequestBody Athlete athlete) throws ModelNotFoundException, IntegridadException, Exception {
         service.editar(athlete);
 
@@ -78,10 +88,10 @@ public class AthleteController {
     }
 
     @DeleteMapping(value = "/delete/{id}")
-    @ApiOperation(value = "Delete athlete", notes = "Delete athlete by ID")
+    @Operation(description = "Delete athlete")
     @ApiResponses(value = {
-            @ApiResponse(code = 204, message = "No Content. The athlete deleted correctly"),
-            @ApiResponse(code = 404, message = "Not Found. Didn't found the athlete")})
+            @ApiResponse(responseCode = "204", description = "No Content. The athlete deleted correctly"),
+            @ApiResponse(responseCode = "404", description = "Not Found. Didn't found the athlete")})
     public ResponseEntity<?> eliminar(@PathVariable int id) throws ModelNotFoundException, IntegridadException, Exception {
         service.eliminar(id);
 

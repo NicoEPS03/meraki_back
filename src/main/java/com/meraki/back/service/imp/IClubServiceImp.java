@@ -3,22 +3,36 @@ package com.meraki.back.service.imp;
 
 import com.meraki.back.dto.ClubAdminDto;
 import com.meraki.back.dto.ClubFilterDto;
+import com.meraki.back.entity.Athlete;
 import com.meraki.back.entity.Club;
+import com.meraki.back.entity.Coach;
 import com.meraki.back.exception.ArgumentRequiredException;
 import com.meraki.back.exception.IntegridadException;
 import com.meraki.back.exception.ModelNotFoundException;
+import com.meraki.back.repository.IAthleteRepo;
+import com.meraki.back.repository.IClubImagesRepo;
 import com.meraki.back.repository.IClubRepo;
+import com.meraki.back.repository.ICoachRepo;
 import com.meraki.back.service.IClubService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Objects;
+
 @Service
 public class IClubServiceImp implements IClubService {
 
     @Autowired
     private IClubRepo repoClub;
+    @Autowired
+    private ICoachRepo repoCoach;
+    @Autowired
+    private IAthleteRepo repoAthlete;
+    @Autowired
+    private IClubImagesRepo repoImages;
 
     private Boolean validarExistenciaPorId(int id) {
         return repoClub.existsById(id);
@@ -77,6 +91,14 @@ public class IClubServiceImp implements IClubService {
         if (validarExistenciaPorId(id)) {
             Club club = this.repoClub.findById(id).get();
             club.setState(false);
+            Coach coach = repoCoach.getCoach(id);
+            coach.getUser().setState(false);
+            List<Athlete> athletes = repoAthlete.findAllClub(id);
+            athletes.forEach(data ->{
+                data.setState(false);
+                this.repoAthlete.save(data);
+            });
+            this.repoCoach.save(coach);
             this.repoClub.save(club);
         } else
             throw new ModelNotFoundException("Club not found");
@@ -88,16 +110,22 @@ public class IClubServiceImp implements IClubService {
         clubDto.setName(club.getName());
         clubDto.setMunicipio(club.getCity().getNombre());
         clubDto.setSport(club.getSport().getName());
+        clubDto.setState(club.getState());
+        Coach coach = repoCoach.getCoach(club.getId());
+        clubDto.setCoach(Objects.nonNull(coach));
         return clubDto;
     }
 
     private ClubFilterDto convertToClubDtoFilter(final Club club) {
         final ClubFilterDto clubDto = new ClubFilterDto();
         clubDto.setId(club.getId());
+        clubDto.setImages(repoImages.clubImages(club.getId()));
         clubDto.setName(club.getName());
-        clubDto.setDecription(club.getDescription());
+        clubDto.setDescription(club.getDescription());
         clubDto.setMunicipio(club.getCity().getNombre());
         clubDto.setSport(club.getSport().getName());
+        Coach coach = repoCoach.getCoach(club.getId());
+        clubDto.setDelegado((Objects.nonNull(coach)) ? repoCoach.getCoach(club.getId()).getName() + repoCoach.getCoach(club.getId()).getLastName() : "Sin delegado");
         return clubDto;
     }
 
@@ -120,5 +148,10 @@ public class IClubServiceImp implements IClubService {
         Page<Club> result = repoClub.searchBySportAndCity(sport, city, PageRequest.of(page, size));
         Page<ClubFilterDto> resultDto = result.map(this::convertToClubDtoFilter);
         return resultDto;
+    }
+
+    @Override
+    public Integer numClubs(int sport, int city) {
+        return repoClub.numSportAndCity(sport, city);
     }
 }

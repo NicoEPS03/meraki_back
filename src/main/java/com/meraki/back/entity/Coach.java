@@ -5,10 +5,12 @@ import io.swagger.annotations.ApiModelProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.Data;
 
 import java.io.Serializable;
 
 @Entity
+@Data
 @Table(name = "coach")
 @ApiModel("Model coach")
 public class Coach implements Serializable {
@@ -37,54 +39,4 @@ public class Coach implements Serializable {
     @JoinColumn(name = "CH_IDDOCUMENTTYPE", foreignKey = @ForeignKey(name = "FK_COACH_IDDOCUMENTTYPE"))
     private DocumentType documentType;
 
-    public Coach() {
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Club getClub() {
-        return club;
-    }
-
-    public void setClub(Club club) {
-        this.club = club;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public DocumentType getDocumentType() {
-        return documentType;
-    }
-
-    public void setDocumentType(DocumentType documentType) {
-        this.documentType = documentType;
-    }
 }

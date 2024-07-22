@@ -5,8 +5,10 @@ import io.swagger.annotations.ApiModelProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.Data;
 
 @Entity
+@Data
 @Table(name = "document_type")
 @ApiModel("Model document type")
 public class DocumentType {
@@ -21,22 +23,4 @@ public class DocumentType {
     @ApiModelProperty(dataType = "String", value = "Description of document type", example = "Cedula")
     private String description;
 
-    public DocumentType() {
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 }

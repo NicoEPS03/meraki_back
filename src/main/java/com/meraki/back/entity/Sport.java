@@ -5,8 +5,10 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.Data;
 
 @Entity
+@Data
 @Table(name = "sport")
 @ApiModel("Model sport")
 public class Sport {
@@ -18,30 +20,4 @@ public class Sport {
     @Column(name = "SP_TEAM", nullable = false)
     private Boolean team;
 
-    public Sport() {
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Boolean getTeam() {
-        return team;
-    }
-
-    public void setTeam(Boolean team) {
-        this.team = team;
-    }
 }

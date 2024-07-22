@@ -5,8 +5,10 @@ import io.swagger.annotations.ApiModelProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.Data;
 
 @Entity
+@Data
 @Table(name = "rol")
 @ApiModel("Model rol")
 public class Rol {
@@ -21,22 +23,4 @@ public class Rol {
     @ApiModelProperty(dataType = "String", value = "Description of rol", example = "Administradoer")
     private String description;
 
-    public Rol() {
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 }

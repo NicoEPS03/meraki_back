@@ -5,10 +5,12 @@ import io.swagger.annotations.ApiModelProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.Data;
 
 import java.io.Serializable;
 
 @Entity
+@Data
 @Table(name = "club_images")
 @ApiModel("Model club images")
 public class ClubImages implements Serializable {
@@ -34,62 +36,4 @@ public class ClubImages implements Serializable {
     @Column(name = "CI_STATE", columnDefinition = "boolean default 1")
     private Boolean state;
 
-    public ClubImages() {
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Club getClub() {
-        return club;
-    }
-
-    public void setClub(Club club) {
-        this.club = club;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public Boolean getBanner() {
-        return banner;
-    }
-
-    public void setBanner(Boolean banner) {
-        this.banner = banner;
-    }
-
-    public Boolean getLogo() {
-        return logo;
-    }
-
-    public void setLogo(Boolean logo) {
-        this.logo = logo;
-    }
-
-    public Boolean getOther() {
-        return other;
-    }
-
-    public void setOther(Boolean other) {
-        this.other = other;
-    }
-
-    public Boolean getState() {
-        return state;
-    }
-
-    public void setState(Boolean state) {
-        this.state = state;
-    }
 }

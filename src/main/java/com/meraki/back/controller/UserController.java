@@ -4,9 +4,11 @@ import com.meraki.back.entity.User;
 import com.meraki.back.exception.IntegridadException;
 import com.meraki.back.exception.ModelNotFoundException;
 import com.meraki.back.service.IUserService;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin(origins= {"*"}, maxAge = 4800, allowCredentials = "false" )
 @RestController
 @RequestMapping("/user")
 @Validated
@@ -23,19 +26,23 @@ public class UserController {
     private IUserService service;
 
     @GetMapping(value = "/getPage/{page}/{size}", produces = "application/json")
-    @ApiOperation(value = "Get all users", notes = "Return all users")
+    @Operation(description = "Return all users")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OK. The response is obtained successfully", response = User.class)})
+            @ApiResponse(responseCode = "200", description = "OK. The response is obtained successfully", content =
+                    { @Content(mediaType = "application/json", schema =
+                    @Schema(implementation =  User.class)) })})
     public ResponseEntity<?> retonarPaginado(@PathVariable int page, @PathVariable int size) {
         Page<User> listUser = service.retornarPaginado(page, size);
         return new ResponseEntity<Page<User>>(listUser, HttpStatus.OK);
     }
 
     @GetMapping(value = "get/{id}", produces = "application/json")
-    @ApiOperation(value = "Get user", notes = "Return user by ID")
+    @Operation(description = "Return user by ID")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OK. The response is obtained successfully", response = User.class),
-            @ApiResponse(code = 404, message = "Not Found. Didn't found the user")})
+            @ApiResponse(responseCode = "200", description = "OK. The response is obtained successfully", content =
+                    { @Content(mediaType = "application/json", schema =
+                    @Schema(implementation =  User.class)) }),
+            @ApiResponse(responseCode = "404", description = "Not Found. Didn't found the user")})
     public ResponseEntity<?> retornarUser(@PathVariable("id") int id) throws ModelNotFoundException, Exception {
         User user = service.retonarPorId(id);
 
@@ -43,10 +50,12 @@ public class UserController {
     }
 
     @PostMapping(value = "/insert", consumes = "application/json")
-    @ApiOperation(value = "Insert user", notes = "Create a new user")
+    @Operation(description = "Create a new user")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Created. The user created correctly", response = User.class),
-            @ApiResponse(code = 409, message = "Conflict. The document already created")})
+            @ApiResponse(responseCode = "201", description = "Created. The user created correctly", content =
+                    { @Content(mediaType = "application/json", schema =
+                    @Schema(implementation =  User.class)) }),
+            @ApiResponse(responseCode = "409", description = "Conflict. The document already created")})
     public ResponseEntity<?> guardar(@Valid @RequestBody User user) throws IntegridadException, Exception {
         service.guardar(user);
 
@@ -54,11 +63,11 @@ public class UserController {
     }
 
     @PutMapping(value = "/edit", consumes = "application/json")
-    @ApiOperation(value = "Edit user", notes = "Edit a user")
+    @Operation(description = "Edit a user")
     @ApiResponses(value = {
-            @ApiResponse(code = 204, message = "Ok. The user edited correctly"),
-            @ApiResponse(code = 404, message = "Not Found. Didn't found the user"),
-            @ApiResponse(code = 409, message = "Conflict. The document already created")})
+            @ApiResponse(responseCode = "204", description = "Ok. The user edited correctly"),
+            @ApiResponse(responseCode = "404", description = "Not Found. Didn't found the user"),
+            @ApiResponse(responseCode = "409", description = "Conflict. The document already created")})
     public ResponseEntity<?> editar(@Valid @RequestBody User user) throws ModelNotFoundException, IntegridadException, Exception {
         service.editar(user);
 
@@ -66,10 +75,10 @@ public class UserController {
     }
 
     @DeleteMapping(value = "/delete/{id}")
-    @ApiOperation(value = "Delete user", notes = "Delete user by ID")
+    @Operation(description = "Delete user by ID")
     @ApiResponses(value = {
-            @ApiResponse(code = 204, message = "No Content. The user deleted correctly"),
-            @ApiResponse(code = 404, message = "Not Found. Didn't found the user")})
+            @ApiResponse(responseCode = "204", description = "No Content. The user deleted correctly"),
+            @ApiResponse(responseCode = "404", description = "Not Found. Didn't found the user")})
     public ResponseEntity<?> eliminar(@PathVariable int id) throws ModelNotFoundException, IntegridadException, Exception {
         service.eliminar(id);
 

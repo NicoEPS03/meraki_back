@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
+
 public interface IFamilyRepo extends JpaRepository<Family, Integer> {
     @Query(value = "SELECT SUM(conteo)\n" +
             " FROM (SELECT COUNT(*) AS conteo FROM family f WHERE f.fa_email = :email \n" +
@@ -20,4 +22,7 @@ public interface IFamilyRepo extends JpaRepository<Family, Integer> {
     public Page<Family> findAllStateTrue(@Param("athlete") int athlete, Pageable pageable);
 
     public int searchDocument(int id, String document);
+
+    @Query(value = "SELECT * FROM Family f WHERE f.fa_state = true AND f.fa_idathlete = :athlete", nativeQuery = true)
+    public List<Family> findfamiliars(@Param("athlete") int athlete);
 }

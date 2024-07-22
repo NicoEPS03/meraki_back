@@ -14,6 +14,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class IFamilyServiceImp implements IFamilyService {
     @Autowired
@@ -51,7 +53,7 @@ public class IFamilyServiceImp implements IFamilyService {
             familyDto.setIdAthlete(family.getAthlete().getId());
             familyDto.setName(family.getName());
             familyDto.setDocument(family.getDocument());
-            familyDto.setDocumentType(family.getDocumentType().getDescription());
+            familyDto.setDocumentType(family.getDocumentType());
             familyDto.setPhone(family.getPhone());
             familyDto.setEmail(family.getEmail());
             familyDto.setCompany(family.getCompany());
@@ -65,6 +67,9 @@ public class IFamilyServiceImp implements IFamilyService {
 
     @Override
     public void guardar(Family family) throws IntegridadException {
+        if(repoFamily.findfamiliars(family.getAthlete().getId()).size() > 2){
+            throw new IntegridadException("Num max of familiar");
+        }
         if (repoFamily.findByDocument(family.getDocument()) != null || repoUser.findByDocument(family.getDocument()) != null || repoFamily.findByDocument(family.getDocument()) != null) {
             throw new IntegridadException("Document all ready exist");
         }
@@ -85,7 +90,7 @@ public class IFamilyServiceImp implements IFamilyService {
                 if (repoAthlete.findById(family.getAthlete().getId()).isEmpty()) {
                     throw new IntegridadException("Athlete dont exist");
                 }
-                if (repoFamily.searchDocument(family.getId(), family.getDocument()) != 1 && repoUser.findByDocument(family.getDocument()) == null && repoAthlete.findByDocument(family.getDocument()) == null) {
+                if (repoFamily.searchDocument(family.getId(), family.getDocument()) != 1 && repoUser.findByDocument(family.getDocument()) == null && repoAthlete.findByDocumentAndState(family.getDocument(),true) == null) {
                     family.setState(true);
                     this.repoFamily.save(family);
                 } else {
@@ -109,9 +114,9 @@ public class IFamilyServiceImp implements IFamilyService {
     }
 
     @Override
-    public Page<FamilyDto> retornarPaginadoFamily(int page, int size, int idAthlete) {
-        Page<Family> result = repoFamily.findAllStateTrue(idAthlete, PageRequest.of(page, size));
-        Page<FamilyDto> familyDtos = result.map(this::convertToFamilyDto);
+    public List<FamilyDto> retornarPaginadoFamily(int idAthlete) {
+        List<Family> result = repoFamily.findfamiliars(idAthlete);
+        List<FamilyDto> familyDtos = result.stream().map(this::convertToFamilyDto).toList();
         return familyDtos;
     }
 
@@ -128,7 +133,7 @@ public class IFamilyServiceImp implements IFamilyService {
         familyDto.setIdAthlete(family.getAthlete().getId());
         familyDto.setName(family.getName());
         familyDto.setDocument(family.getDocument());
-        familyDto.setDocumentType(family.getDocumentType().getDescription());
+        familyDto.setDocumentType(family.getDocumentType());
         familyDto.setPhone(family.getPhone());
         familyDto.setEmail(family.getEmail());
         familyDto.setCompany(family.getCompany());
