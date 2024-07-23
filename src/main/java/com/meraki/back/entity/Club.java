@@ -60,7 +60,7 @@ public class Club implements Serializable {
     @Column(name = "CB_WHATSAPP_LINK", length = 50)
     @ApiModelProperty(dataType = "String", value = "Whatsapp link of club", example = "www.whatsapp.com")
     private String whatsappLink;
-    @Column(name = "CB_STATE", columnDefinition = "boolean default false")
+    @Column(name = "CB_STATE", columnDefinition = "boolean default true")
     private Boolean state;
 
     public Club() {
