@@ -35,7 +35,7 @@ public class User implements Serializable {
     @ApiModelProperty(required = true, dataType = "String", value = "Description of minimum 8 and maximum 30 characters", example = "contraseña", allowableValues = "range[8,30]")
     @Column(name = "USR_PASSWORD", length = 30, nullable = false)
     private String password;
-    @Column(name = "USR_STATE", columnDefinition = "boolean default 1")
+    @Column(name = "USR_STATE", columnDefinition = "boolean default true")
     private Boolean state;
 
 }

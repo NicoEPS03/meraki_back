@@ -157,7 +157,7 @@ public class Athlete implements Serializable {
     @ApiModelProperty(dataType = "String", value = "Nationality of minimum 5 and maximum 50 characters", example = "Problemas de respiración", allowableValues = "range[5,50]")
     @Column(name = "AT_DISEASEDESCRIPTION", length = 50)
     private String diseaseDescription;
-    @Column(name = "AT_STATE", columnDefinition = "boolean default false")
+    @Column(name = "AT_STATE", columnDefinition = "boolean default true")
     private Boolean state;
 
 }

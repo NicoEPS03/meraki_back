@@ -33,7 +33,7 @@ public class ClubImages implements Serializable {
     private Boolean logo;
     @Column(name = "CI_OTHER")
     private Boolean other;
-    @Column(name = "CI_STATE", columnDefinition = "boolean default 1")
+    @Column(name = "CI_STATE", columnDefinition = "boolean default true")
     private Boolean state;
 
 }
