@@ -11,15 +11,15 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface IClubRepo extends JpaRepository<Club, Integer> {
     public Page<Club> findAllByState(boolean state, Pageable pageable);
-    @Query(value = "SELECT * FROM Club c WHERE c.cb_idsport = :sport AND c.cb_state = true", nativeQuery = true)
+    @Query(value = "SELECT * FROM public.Club c WHERE c.cb_idsport = :sport AND c.cb_state = true", nativeQuery = true)
     public Page<Club> searchBySport(@Param("sport") int sport, Pageable pageable);
 
-    @Query(value = "SELECT * FROM Club c WHERE c.cb_idcity = :city AND c.cb_state = true", nativeQuery = true)
+    @Query(value = "SELECT * FROM public.Club c WHERE c.cb_idcity = :city AND c.cb_state = true", nativeQuery = true)
     public Page<Club> searchByCity(@Param("city") int city, Pageable pageable);
 
-    @Query(value = "SELECT * FROM Club c WHERE c.cb_idcity = :city AND c.cb_idsport = :sport AND c.cb_state = true", nativeQuery = true)
+    @Query(value = "SELECT * FROM public.Club c WHERE c.cb_idcity = :city AND c.cb_idsport = :sport AND c.cb_state = true", nativeQuery = true)
     public Page<Club> searchBySportAndCity(@Param("sport") int sport, @Param("city") int city, Pageable pageable);
 
-    @Query(value = "SELECT COUNT(*) FROM Club c WHERE c.cb_idcity = :city AND c.cb_idsport = :sport AND c.cb_state = true", nativeQuery = true)
+    @Query(value = "SELECT COUNT(*) FROM public.Club c WHERE c.cb_idcity = :city AND c.cb_idsport = :sport AND c.cb_state = true", nativeQuery = true)
     public Integer numSportAndCity(@Param("sport") int sport, @Param("city") int city);
 }
