@@ -12,17 +12,17 @@ import java.util.List;
 
 public interface IFamilyRepo extends JpaRepository<Family, Integer> {
     @Query(value = "SELECT SUM(conteo)\n" +
-            " FROM (SELECT COUNT(*) AS conteo FROM family f WHERE f.fa_email = :email \n" +
-            "UNION ALL SELECT COUNT(*) AS conteo FROM athlete a WHERE a.at_email = :email) AS subconsulta", nativeQuery = true)
+            " FROM (SELECT COUNT(*) AS conteo FROM public.family f WHERE f.fa_email = :email \n" +
+            "UNION ALL SELECT COUNT(*) AS conteo FROM public.athlete a WHERE a.at_email = :email) AS subconsulta", nativeQuery = true)
     public int existsEmailInsert(@Param("email") String email);
 
     public Family findByDocument(String document);
 
-    @Query(value = "SELECT * FROM Family f WHERE f.fa_state = true AND f.fa_idathlete = :athlete", nativeQuery = true)
+    @Query(value = "SELECT * FROM public.Family f WHERE f.fa_state = true AND f.fa_idathlete = :athlete", nativeQuery = true)
     public Page<Family> findAllStateTrue(@Param("athlete") int athlete, Pageable pageable);
 
     public int searchDocument(int id, String document);
 
-    @Query(value = "SELECT * FROM Family f WHERE f.fa_state = true AND f.fa_idathlete = :athlete", nativeQuery = true)
+    @Query(value = "SELECT * FROM public.Family f WHERE f.fa_state = true AND f.fa_idathlete = :athlete", nativeQuery = true)
     public List<Family> findfamiliars(@Param("athlete") int athlete);
 }
