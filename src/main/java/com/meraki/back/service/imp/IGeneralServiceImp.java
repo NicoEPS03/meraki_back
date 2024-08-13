@@ -29,7 +29,7 @@ public class IGeneralServiceImp implements IGeneralService {
     private IUserRepo userRepo;
     @Override
     public List<Sport> listaDeportes() {
-        List <Sport> sports = sportRepo.findAll();
+        List <Sport> sports = sportRepo.findAllSportOrderAsc();
         return sports;
     }
 

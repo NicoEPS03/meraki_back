@@ -63,7 +63,6 @@ public class IClubImageServiceImp implements IClubImagesService {
         if (repoClubImages.numberLogoImages(clubImages.getClub().getId()) >= 1 && clubImages.getLogo()) {
             throw new IntegridadException("Maximum number of logo image");
         }
-        clubImages.setState(true);
         this.repoClubImages.save(clubImages);
     }
 
@@ -74,7 +73,6 @@ public class IClubImageServiceImp implements IClubImagesService {
                 if (repoClub.findById(clubImages.getClub().getId()).isEmpty()) {
                     throw new IntegridadException("Club dont exist");
                 }
-                clubImages.setState(true);
                 this.repoClubImages.save(clubImages);
             } else
                 throw new ModelNotFoundException("Images not found");
@@ -87,8 +85,7 @@ public class IClubImageServiceImp implements IClubImagesService {
     public void eliminar(int id) throws ModelNotFoundException, ArgumentRequiredException {
         if (validarExistenciaPorId(id)) {
             ClubImages clubImages = this.repoClubImages.findById(id).get();
-            clubImages.setState(false);
-            this.repoClubImages.save(clubImages);
+            this.repoClubImages.delete(clubImages);
         } else
             throw new ModelNotFoundException("Image not found");
     }
@@ -105,7 +102,6 @@ public class IClubImageServiceImp implements IClubImagesService {
             imageDto.setLogo(data.getLogo());
             imageDto.setBanner(data.getBanner());
             imageDto.setOther(data.getOther());
-            imageDto.setState(data.getState());
             imagesDto.add(imageDto);
         });
         return imagesDto;
@@ -118,7 +114,6 @@ public class IClubImageServiceImp implements IClubImagesService {
         imagesDto.setLogo(images.getLogo());
         imagesDto.setBanner(images.getBanner());
         imagesDto.setOther(images.getOther());
-        imagesDto.setState(images.getState());
         return imagesDto;
     }
 }
