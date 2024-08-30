@@ -54,7 +54,7 @@ public class IClubImageServiceImp implements IClubImagesService {
         if (repoClub.findById(clubImages.getClub().getId()).isEmpty()) {
             throw new IntegridadException("Club dont exist");
         }
-        if (repoClubImages.numberOtherImages(clubImages.getClub().getId()) >= 2 && clubImages.getOther()) {
+        if (repoClubImages.numberOtherImages(clubImages.getClub().getId()) >= 1 && clubImages.getOther()) {
             throw new IntegridadException("Maximum number of images");
         }
         if (repoClubImages.numberBannerImages(clubImages.getClub().getId()) >= 1 && clubImages.getBanner()) {
