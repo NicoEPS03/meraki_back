@@ -68,17 +68,6 @@ public class IClubImageServiceImp implements IClubImagesService {
 
     @Override
     public void editar(ClubImages clubImages) throws ArgumentRequiredException, ModelNotFoundException, IntegridadException {
-        if (clubImages.getId() != null) {
-            if (validarExistenciaPorId(clubImages.getId())) {
-                if (repoClub.findById(clubImages.getClub().getId()).isEmpty()) {
-                    throw new IntegridadException("Club dont exist");
-                }
-                this.repoClubImages.save(clubImages);
-            } else
-                throw new ModelNotFoundException("Images not found");
-        } else {
-            throw new ArgumentRequiredException("IdImages is required");
-        }
     }
 
     @Override

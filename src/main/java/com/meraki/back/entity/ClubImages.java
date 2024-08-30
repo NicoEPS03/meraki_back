@@ -23,7 +23,7 @@ public class ClubImages implements Serializable {
     @JoinColumn(name = "CI_IDCLUB", foreignKey = @ForeignKey(name = "FK_CLUBIMAGE_IDCLUB"))
     private Club club;
     @NotNull(message = "Url is obligatory")
-    @Size(min = 30, max = 300, message = "The url must be between 30 and 300 characters")
+    @Size(min = 10, max = 300, message = "The url must be between 30 and 300 characters")
     @Column(name = "CI_URL", length = 300, nullable = false)
     @ApiModelProperty(dataType = "String", value = "Url image of club", example = "www.club...")
     private String url;
