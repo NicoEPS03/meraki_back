@@ -52,18 +52,6 @@ public class ClubImagesController {
         return new ResponseEntity<Object>(clubImages, HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "/edit", consumes = "application/json")
-    @Operation(description = "Edit a athlete")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "204", description = "Ok. The club image edited correctly"),
-            @ApiResponse(responseCode = "404", description = "Not Found. Didn't found the athlete"),
-            @ApiResponse(responseCode = "409", description = "Conflict. The document already created")})
-    public ResponseEntity<?> editar(@Valid @RequestBody ClubImages clubImages) throws ModelNotFoundException, IntegridadException, Exception {
-        service.editar(clubImages);
-
-        return new ResponseEntity<Object>(clubImages, HttpStatus.OK);
-    }
-
     @DeleteMapping(value = "/delete/{id}")
     @Operation(description = "Delete club image by ID")
     @ApiResponses(value = {
