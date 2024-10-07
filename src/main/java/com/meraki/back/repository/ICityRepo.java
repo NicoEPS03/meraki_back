@@ -11,4 +11,7 @@ public interface ICityRepo extends JpaRepository<City, Integer> {
     @Query(value = "SELECT c.* FROM public.city c JOIN public.club cl ON c.ct_id = cl.cb_idcity JOIN public.sport s ON s.sp_id = cl.cb_idsport " +
             "WHERE s.sp_id = :sportId AND cl.cb_state = true GROUP BY c.ct_id", nativeQuery = true)
     public List<City> listsCitys(@Param("sportId") Integer sport);
+
+    @Query(value = "SELECT c.* FROM public.city c WHERE c.ct_iddep =:deptId", nativeQuery = true)
+    public List<City> listsCityId(@Param("deptId") Integer id);
 }

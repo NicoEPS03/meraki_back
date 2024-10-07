@@ -2,9 +2,11 @@ package com.meraki.back.controller;
 
 import com.meraki.back.dto.ClubAdminDto;
 import com.meraki.back.dto.ClubFilterDto;
+import com.meraki.back.entity.Athlete;
 import com.meraki.back.entity.Club;
 import com.meraki.back.exception.IntegridadException;
 import com.meraki.back.exception.ModelNotFoundException;
+import com.meraki.back.service.IAthleteService;
 import com.meraki.back.service.IClubService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -19,6 +21,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @CrossOrigin(origins= {"*"}, maxAge = 4800, allowCredentials = "false" )
 @RestController
 @RequestMapping("/club")
@@ -26,6 +30,18 @@ import org.springframework.web.bind.annotation.*;
 public class ClubController {
     @Autowired
     private IClubService service;
+
+    @GetMapping(value = "getAllExcel/{id}", produces = "application/json")
+    @Operation(description = "Get athletes for excel export")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "OK. The response is obtained successfully", content =
+                    { @Content(mediaType = "application/json", schema =
+                    @Schema(implementation = Athlete.class)) })})
+    public ResponseEntity<?> retornarAthleteExcel(@PathVariable int id) {
+        List<Athlete> athletes = service.retornarAtletas(id);
+
+        return new ResponseEntity<Object>(athletes, HttpStatus.OK);
+    }
 
     @GetMapping(value = "/getNumClubs/{sport}/{city}", produces = "application/json")
     @Operation(description = "Get all clubs on admin view")

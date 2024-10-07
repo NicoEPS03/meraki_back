@@ -55,6 +55,17 @@ public class GeneralController {
         return new ResponseEntity<List<City>>(cityList, HttpStatus.OK);
     }
 
+    @GetMapping(value = "/getCities/{id}", produces = "application/json")
+    @Operation(description = "Return all cities")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "OK. The response is obtained successfully", content =
+                    { @Content(mediaType = "application/json", schema =
+                    @Schema(implementation =  City.class)) })})
+    public ResponseEntity<?> retonarCidudaesId(@PathVariable int id) {
+        List<City> cityList = service.listaCiudadesId(id);
+        return new ResponseEntity<List<City>>(cityList, HttpStatus.OK);
+    }
+
     @GetMapping(value = "/getDocuments", produces = "application/json")
     @Operation(description = "Return all documents")
     @ApiResponses(value = {

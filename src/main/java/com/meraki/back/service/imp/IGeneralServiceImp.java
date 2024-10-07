@@ -46,6 +46,12 @@ public class IGeneralServiceImp implements IGeneralService {
     }
 
     @Override
+    public List<City> listaCiudadesId(Integer id) {
+        List <City> cities = cityRepo.listsCityId(id);
+        return cities;
+    }
+
+    @Override
     public List<DocumentType> listaDocumentos() {
         List <DocumentType> documentTypes = documentRepo.findAll();
         return documentTypes;
