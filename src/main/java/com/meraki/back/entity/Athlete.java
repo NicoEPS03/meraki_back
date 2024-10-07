@@ -117,7 +117,7 @@ public class Athlete implements Serializable {
     @ApiModelProperty(dataType = "String", value = "Disability type of minimum 5 and maximum 20 characters", example = "Física", allowableValues = "range[5,20]")
     @Column(name = "AT_DISABILITYTYPE", length = 20)
     private String disabilityType;
-    @Size(min = 5, max = 15, message = "The population type must be between 5 and 15 characters")
+    @Size(min = 3, max = 15, message = "The population type must be between 5 and 15 characters")
     @ApiModelProperty(dataType = "String", value = "Population type of minimum 5 and maximum 15 characters", example = "Victima", allowableValues = "range[5,15]")
     @Column(name = "AT_POPULATIONTYPE", length = 15)
     private String populationType;

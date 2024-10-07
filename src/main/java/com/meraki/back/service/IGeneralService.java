@@ -16,6 +16,8 @@ public interface IGeneralService {
 
     public List<City> listaCiudades();
 
+    public List<City> listaCiudadesId(Integer Id);
+
     public List<DocumentType> listaDocumentos();
 
     public User login(UserDto userDto) throws ModelNotFoundException;

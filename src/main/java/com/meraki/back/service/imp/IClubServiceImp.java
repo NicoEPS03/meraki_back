@@ -154,4 +154,9 @@ public class IClubServiceImp implements IClubService {
     public Integer numClubs(int sport, int city) {
         return repoClub.numSportAndCity(sport, city);
     }
+
+    @Override
+    public List<Athlete> retornarAtletas(Integer id) {
+        return repoAthlete.findAllClub(id);
+    }
 }
