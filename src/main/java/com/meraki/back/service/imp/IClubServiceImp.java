@@ -3,6 +3,7 @@ package com.meraki.back.service.imp;
 
 import com.meraki.back.dto.ClubAdminDto;
 import com.meraki.back.dto.ClubFilterDto;
+import com.meraki.back.dto.ExcelAthleteDto;
 import com.meraki.back.entity.Athlete;
 import com.meraki.back.entity.Club;
 import com.meraki.back.entity.Coach;
@@ -14,11 +15,13 @@ import com.meraki.back.repository.IClubImagesRepo;
 import com.meraki.back.repository.IClubRepo;
 import com.meraki.back.repository.ICoachRepo;
 import com.meraki.back.service.IClubService;
+import com.meraki.back.service.IFamilyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -33,6 +36,8 @@ public class IClubServiceImp implements IClubService {
     private IAthleteRepo repoAthlete;
     @Autowired
     private IClubImagesRepo repoImages;
+    @Autowired
+    private IFamilyService iFamilyService;
 
     private Boolean validarExistenciaPorId(int id) {
         return repoClub.existsById(id);
@@ -156,7 +161,15 @@ public class IClubServiceImp implements IClubService {
     }
 
     @Override
-    public List<Athlete> retornarAtletas(Integer id) {
-        return repoAthlete.findAllClub(id);
+    public List<ExcelAthleteDto> retornarAtletas(Integer id) {
+        List<ExcelAthleteDto> excelAthleteDtos = new ArrayList<>();
+        List<Athlete> athletes = repoAthlete.findAllClub(id);
+        athletes.forEach(athlete -> {
+            ExcelAthleteDto excelAthleteDto = new ExcelAthleteDto();
+            excelAthleteDto.setAthlete(athlete);
+            excelAthleteDto.setFamilyDtoList(iFamilyService.retornarPaginadoFamily(athlete.getId()));
+            excelAthleteDtos.add(excelAthleteDto);
+        });
+        return excelAthleteDtos;
     }
 }
