@@ -2,6 +2,7 @@ package com.meraki.back.controller;
 
 import com.meraki.back.dto.ClubAdminDto;
 import com.meraki.back.dto.ClubFilterDto;
+import com.meraki.back.dto.ExcelAthleteDto;
 import com.meraki.back.entity.Athlete;
 import com.meraki.back.entity.Club;
 import com.meraki.back.exception.IntegridadException;
@@ -38,7 +39,7 @@ public class ClubController {
                     { @Content(mediaType = "application/json", schema =
                     @Schema(implementation = Athlete.class)) })})
     public ResponseEntity<?> retornarAthleteExcel(@PathVariable int id) {
-        List<Athlete> athletes = service.retornarAtletas(id);
+        List<ExcelAthleteDto> athletes = service.retornarAtletas(id);
 
         return new ResponseEntity<Object>(athletes, HttpStatus.OK);
     }
